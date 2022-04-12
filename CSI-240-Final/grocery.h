@@ -9,12 +9,23 @@ using namespace std;
 
 //Global Constants
 const string INVENTORY_FILE_NAME = "inventory.dat";
-
+const string ADMIN_USER = "admin";
 //Global Functions
 char login();
 void startMenu();
 void adminMenu();
 void customerMenu();
+
+class Exceptions
+{
+public:
+	Exceptions(string message = "")
+	{
+		this->message = message;
+	}
+private:
+	string message;
+};
 
 class Inventory
 {
@@ -29,7 +40,7 @@ public:
 	void importInventory();
 	void exportInventory();
 private:
-	static vector<Item> inventory;
+	//static vector<Item> inventory;
 };
 
 class Cart
@@ -43,7 +54,7 @@ public:
 	void displayCart();
 	void calculateTotalPrice();
 private:
-	static vector<Item> cart;
+	//static vector<Item> cart;
 };
 
 class Item

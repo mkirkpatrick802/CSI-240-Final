@@ -21,13 +21,47 @@ void startMenu()
 //Output char depending on result: a, or c
 char login() 
 {
-	//Ask for Username
-	//Input Username
+	string username;
+	string password;
+	cout << "Username: ";
+	cin >> username;
+	cout  << "\nPassword: ";
+	cin >> password;
 
-	//Check if username exists in login.dat file
-
-	//Ask for password
-	//Input password
+	ifstream login;
+	login.open("login.dat");
+	if (!login.is_open())
+	{
+		throw Exceptions("Error - File cannot be found");
+	}
+	else
+	{
+		while (!login.eof())
+		{
+			string temp;
+			getline(login, temp);
+			if (temp == username)
+			{
+				getline(login, temp);
+				if (temp == password)
+				{
+					if (username == ADMIN_USER)
+					{
+						adminMenu();
+						return 'a';
+					}
+					else
+					{
+						customerMenu();
+						return 'c';
+					}
+				}
+				else		
+				throw Exceptions("Incorrect Password");
+			}
+		}
+		throw Exceptions("Username does not exist");
+	}
 }
 
 void adminMenu() 
@@ -63,25 +97,26 @@ void adminMenu()
 
 void customerMenu() 
 {
-	int pickOption;
-	switch (pickOption)
-	{
-	case 1:
-		//Add Inventory Item to cart
-		break;
-	case 2:
-		//REmove Item form cart
-		break;
-	case 3:
-		//Display Cart
-		break;
-	case 4: 
-		//Checkout
-		break;
-	default:
-		//Quit
-		break;
-	}
+	cout << "yo";
+	//int pickOption;
+	//switch (pickOption)
+	//{
+	//case 1:
+	//	//Add Inventory Item to cart
+	//	break;
+	//case 2:
+	//	//REmove Item form cart
+	//	break;
+	//case 3:
+	//	//Display Cart
+	//	break;
+	//case 4: 
+	//	//Checkout
+	//	break;
+	//default:
+	//	//Quit
+	//	break;
+	//}
 }
 
 Inventory::Inventory()
