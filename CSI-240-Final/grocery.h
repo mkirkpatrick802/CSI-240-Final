@@ -29,7 +29,7 @@ public:
 	void importInventory();
 	void exportInventory();
 private:
-	static vector<Item> inventory;
+	static vector<Item> inventoryList;
 };
 
 class Cart
