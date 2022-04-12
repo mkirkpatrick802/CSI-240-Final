@@ -12,7 +12,7 @@ void startMenu()
 		customerMenu();
 		break;
 	default:
-		//throw exception
+		Exceptions("something went wrong");
 		break;
 	}
 }
@@ -97,26 +97,25 @@ void adminMenu()
 
 void customerMenu() 
 {
-	cout << "yo";
-	//int pickOption;
-	//switch (pickOption)
-	//{
-	//case 1:
-	//	//Add Inventory Item to cart
-	//	break;
-	//case 2:
-	//	//REmove Item form cart
-	//	break;
-	//case 3:
-	//	//Display Cart
-	//	break;
-	//case 4: 
-	//	//Checkout
-	//	break;
-	//default:
-	//	//Quit
-	//	break;
-	//}
+	int pickOption;
+	switch (pickOption)
+	{
+	case 1:
+		//Add Inventory Item to cart
+		break;
+	case 2:
+		//REmove Item form cart
+		break;
+	case 3:
+		//Display Cart
+		break;
+	case 4: 
+		//Checkout
+		break;
+	default:
+		//Quit
+		break;
+	}
 }
 
 Inventory::Inventory()
@@ -149,7 +148,7 @@ void Inventory::displayInventory()
 void Inventory::importInventory()
 {
 	ifstream inventoryFile;
-	if (!inventoryFile.is_open()) {/*throw exception*/}
+	if (!inventoryFile.is_open()) { throw Exceptions("Error - File not found"); }
 
 	inventoryFile.open(INVENTORY_FILE_NAME);
 	while (!inventoryFile.eof()) 
