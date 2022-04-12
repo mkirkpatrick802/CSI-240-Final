@@ -32,19 +32,26 @@ char login()
 
 void adminMenu() 
 {
+	Inventory inventory;
+	inventory.importInventory();
+
 	int pickOption;
+	cout << "Please Select How You'd Like to Proceed" << endl;
+	cout << "[1] Add Item To Inventory" << endl;
+	cout << "[2] Delete Item From Inventory" << endl;
+	cout << "[3] Display Inventory" << endl;
+	cout << "[4] Save and Quit" << endl;
+	cout << "Please Select One To Continue: ";
+	cin >> pickOption;
 	switch (pickOption)
 	{
 	case 1:
-		//Add chosen item to inventory
+		inventory.addToInventory();
 		break;
 	case 2: 
 		//Delete item from inventory
 		break;
-	case 3: 
-		//Load Inventory from file
-		break;
-	case 4:
+	case 3:
 		//Display Inventory
 		break;
 	default:
@@ -83,6 +90,37 @@ Inventory::Inventory()
 }
 
 Inventory::~Inventory()
+{
+
+}
+
+void Inventory::addToInventory()
+{
+
+}
+
+void Inventory::displayInventory()
+{
+
+}
+
+void Inventory::importInventory()
+{
+	stringstream ss;
+	ifstream inventoryFile;
+	//check if file exists
+	inventoryFile.open(INVENTORY_FILE_NAME);
+	while (!inventoryFile.eof()) 
+	{
+		string newLine;
+		getline(inventoryFile, newLine);
+		ss << newLine;
+	}
+
+	cout << "[[IMPORT SUCCESSFUL]]" << endl;
+}
+
+void Inventory::exportInventory()
 {
 
 }

@@ -4,7 +4,11 @@
 #include <vector>
 #include <fstream>
 #include <iomanip>
+#include <sstream>
 using namespace std;
+
+//Global Constants
+const string INVENTORY_FILE_NAME = "inventory.dat";
 
 //Global Functions
 char login();
@@ -19,15 +23,11 @@ public:
 
 	~Inventory();
 
-	void addToInventory() 
-	{
+	void addToInventory();
+	void displayInventory();
 
-	}
-
-	void displayInventory() 
-	{
-
-	}
+	void importInventory();
+	void exportInventory();
 private:
 	static vector<Item> inventory;
 };
@@ -35,26 +35,13 @@ private:
 class Cart
 {
 public:
-	Cart()
-	{
+	Cart();
 
-	}
+	~Cart();
 
-	~Cart()
-	{
-
-	}
-
-
-	void addToCart()
-	{
-
-	}
-
-	void displayCart() 
-	{
-
-	}
+	void addToCart();
+	void displayCart();
+	void calculateTotalPrice();
 private:
 	static vector<Item> cart;
 };
@@ -69,9 +56,44 @@ private:
 	double price;
 };
 
-//Meats class
-//Vegetables class
-//Fruits class
-//Baked Goods class
-//Snacks class
-//Drinks class
+class Meats : public Item 
+{
+public:
+
+private:
+};
+
+class Vegetables : public Item
+{
+public:
+
+private:
+};
+
+class Fruits : public Item
+{
+public:
+
+private:
+};
+
+class BakedGoods : public Item
+{
+public:
+
+private:
+};
+
+class Snacks : public Item
+{
+public:
+
+private:
+};
+
+class Drinks : public Item
+{
+public:
+
+private:
+};
