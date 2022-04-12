@@ -146,6 +146,7 @@
     <ClInclude Include="grocery.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include=".gitignore" />
     <None Include="inventory.dat" />
     <None Include="login.dat" />
     <None Include="users.dat" />

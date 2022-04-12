@@ -136,12 +136,14 @@ void Inventory::addToInventory()
 
 void Inventory::displayInventory()
 {
-
+	for (string i : inventoryList) 
+	{
+		cout << i << endl;
+	}
 }
 
 void Inventory::importInventory()
 {
-	stringstream ss;
 	ifstream inventoryFile;
 	//check if file exists
 	inventoryFile.open(INVENTORY_FILE_NAME);
@@ -149,7 +151,7 @@ void Inventory::importInventory()
 	{
 		string newLine;
 		getline(inventoryFile, newLine);
-		ss << newLine;
+		inventoryList.push_back(newLine);
 	}
 
 	cout << "[[IMPORT SUCCESSFUL]]" << endl;
