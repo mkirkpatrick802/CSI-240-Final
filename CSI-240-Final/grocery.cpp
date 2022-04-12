@@ -83,10 +83,10 @@ void adminMenu()
 		inventory.addToInventory();
 		break;
 	case 2: 
-		//Delete item from inventory
+		inventory.deleteItemFromInventory();
 		break;
 	case 3:
-		//Display Inventory
+		inventory.displayInventory();
 		break;
 	default:
 		// Load vector to file
@@ -134,6 +134,10 @@ void Inventory::addToInventory()
 
 }
 
+void Inventory::deleteItemFromInventory()
+{
+}
+
 void Inventory::displayInventory()
 {
 	for (string i : inventoryList) 
@@ -145,7 +149,8 @@ void Inventory::displayInventory()
 void Inventory::importInventory()
 {
 	ifstream inventoryFile;
-	//check if file exists
+	if (!inventoryFile.is_open()) {/*throw exception*/}
+
 	inventoryFile.open(INVENTORY_FILE_NAME);
 	while (!inventoryFile.eof()) 
 	{

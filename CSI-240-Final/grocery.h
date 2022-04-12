@@ -35,6 +35,7 @@ public:
 	~Inventory();
 
 	void addToInventory();
+	void deleteItemFromInventory();
 	void displayInventory();
 
 	void importInventory();
