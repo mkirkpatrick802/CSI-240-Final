@@ -140,7 +140,7 @@ void Inventory::deleteItemFromInventory()
 
 void Inventory::displayInventory()
 {
-	for (string i : inventoryList) 
+	for (auto i : inventoryList)
 	{
 		cout << i << endl;
 	}
@@ -154,9 +154,12 @@ void Inventory::importInventory()
 	inventoryFile.open(INVENTORY_FILE_NAME);
 	while (!inventoryFile.eof()) 
 	{
-		string newLine;
-		getline(inventoryFile, newLine);
-		inventoryList.push_back(newLine);
+		string name;
+		double price;
+		inventoryFile >> name;
+		inventoryFile >> price;
+
+		inventoryList.push_back(new Item(name, price));
 	}
 
 	cout << "[[IMPORT SUCCESSFUL]]" << endl;

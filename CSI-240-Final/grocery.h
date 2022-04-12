@@ -27,6 +27,24 @@ private:
 	string message;
 };
 
+class Item
+{
+public:
+
+	Item(string name, double price) 
+	{
+		this->name = name;
+		this->price = price;
+	}
+
+	void getDisciption();
+
+private:
+	string name;
+	double amount;
+	double price;
+};
+
 class Inventory
 {
 public:
@@ -41,7 +59,7 @@ public:
 	void importInventory();
 	void exportInventory();
 private:
-	//static vector<Item> inventory;
+	vector<Item> inventoryList;
 };
 
 class Cart
@@ -55,18 +73,9 @@ public:
 	void displayCart();
 	void calculateTotalPrice();
 private:
-	//static vector<Item> cart;
+	vector<Item> cart;
 };
 
-class Item
-{
-public:
-
-private:
-	string name;
-	int amount;
-	double price;
-};
 
 class Meats : public Item 
 {
