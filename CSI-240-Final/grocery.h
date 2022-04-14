@@ -10,6 +10,20 @@ using namespace std;
 //Global Constants
 const string INVENTORY_FILE_NAME = "inventory.dat";
 const string ADMIN_USER = "admin";
+const string CUSTOMER_USER = "customer";
+
+const enum category
+{
+	NULL_CATAGORY = 0,
+	MEAT,
+	VEGETABLE,
+	FRUIT,
+	BAKED_GOOD,
+	SNACKS,
+	DRINK
+};
+const string CATEGORY_NAMES[] = { "Null", "Meat", "Vegetable", "Fruit", "Baked Good", "Snack", "Drink" };
+
 //Global Functions
 char login();
 void startMenu();
@@ -19,10 +33,7 @@ void customerMenu();
 class Exceptions
 {
 public:
-	Exceptions(string message = "")
-	{
-		this->message = message;
-	}
+	Exceptions(string message = "");
 private:
 	string message;
 };
@@ -31,18 +42,16 @@ class Item
 {
 public:
 
-	Item(string name, double price) 
-	{
-		this->name = name;
-		this->price = price;
-	}
+	Item(int itemCatagory, string name, double price);
+	void getDescription();
 
-	void getDisciption();
+	string fileFormat();
 
 private:
+	int itemCategory;
 	string name;
-	double amount;
 	double price;
+	double amount;
 };
 
 class Inventory
@@ -59,7 +68,7 @@ public:
 	void importInventory();
 	void exportInventory();
 private:
-	vector<Item> inventoryList;
+	vector<Item*> inventoryList;
 };
 
 class Cart
