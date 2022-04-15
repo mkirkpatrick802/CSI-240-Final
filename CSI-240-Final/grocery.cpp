@@ -67,8 +67,8 @@ void adminMenu()
 	Inventory inventory;
 	inventory.importInventory();
 	int pickOption = 0;
-	//while (pickOption != 4)
-	//{
+	while (pickOption != 4)
+	{
 
 		cout << endl;
 		cout << "Please Select How You'd Like to Proceed" << endl;
@@ -96,7 +96,7 @@ void adminMenu()
 			return;
 			break;
 		}
-	//}
+	}
 
 }
 
@@ -162,14 +162,36 @@ void Inventory::addToInventory()
 
 		cout << "Add Another? [0 for No] [1 for Yes]: ";
 		cin >> option;
-	} while (option == 1);
 
-	return;
+		cout << endl;
+	} while (option == 1);
 }
 
 //Michael K
 void Inventory::deleteItemFromInventory()
 {
+	int option = 1;
+	do 
+	{
+		string name;
+
+		cout << "Please Enter The Item You'd Like To Delete: ";
+		cin >> name;
+
+		for (int i = 0; i < inventoryList.size(); i++) 
+		{
+			if (inventoryList[i]->getName() != name) continue;
+
+			inventoryList.erase(inventoryList.begin()+i);
+		}
+
+
+		cout << "Delete Another? [0 for No] [1 for Yes]: ";
+		cin >> option;
+
+		cout << endl;
+
+	} while (option == 1);
 }
 
 //Michael K
@@ -179,8 +201,6 @@ void Inventory::displayInventory()
 	{
 		i->getDescription();
 	}
-
-	return;
 }
 
 //Michael K
@@ -206,7 +226,6 @@ void Inventory::importInventory()
 	}
 
 	cout << endl << "[[IMPORT SUCCESSFUL]]" << endl;
-	return;
 }
 
 //Michael K
@@ -221,29 +240,38 @@ void Inventory::exportInventory()
 	{
 		inventoryFile << i->fileFormat() << endl;
 	}
-	return;
 }
-
-string Item::fileFormat()
-{
-	return to_string(itemCategory) + " " + name + " " + to_string(price);
-}
-
-void Item::getDescription()
-{
+
+//Michael K
+string Item::fileFormat()
+{
+	return to_string(itemCategory) + " " + name + " " + to_string(price);
+}
+
+//Michael K
+string Item::getName()
+{
+	return name;
+}
+
+//Michael K
+void Item::getDescription()
+{
 	cout << "Item Type: " << CATEGORY_NAMES[itemCategory] << " | ";
 	cout << "Item Name: " << name << " | ";
-	cout << "Price: $" << price << " | " << endl;
-}
-
-Item::Item(int itemCatagory, string name, double price)
-{
+	cout << "Price: $" << price << " | " << endl;
+}
+
+//Michael K
+Item::Item(int itemCatagory, string name, double price)
+{
 	this->itemCategory = itemCatagory;
 	this->name = name;
-	this->price = price;
-}
-
-Exceptions::Exceptions(string message)
-{
-	this->message = message;
-}
+	this->price = price;
+}
+
+//Michael M
+Exceptions::Exceptions(string message)
+{
+	this->message = message;
+}

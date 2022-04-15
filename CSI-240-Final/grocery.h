@@ -46,6 +46,7 @@ public:
 	void getDescription();
 
 	string fileFormat();
+	string getName();
 
 private:
 	int itemCategory;
