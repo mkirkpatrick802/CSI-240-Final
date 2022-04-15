@@ -1,5 +1,13 @@
 #include "grocery.h"
 
+Exceptions::Exceptions(string message)
+{
+	this->message = message;
+}
+string Exceptions::getMessage()
+{
+	return message;
+}
 
 void startMenu() 
 {
@@ -14,17 +22,14 @@ void startMenu()
 	}
 }
 
-//Mikey
+//Mikey M
 //Output char depending on result: a, or c
 char login() 
 {
 	string username;
 	string password;
-	cout << "Username: ";
-	cin >> username;
-	cout  << "\nPassword: ";
-	cin >> password;
-
+	int line = 1;
+	char check = 'null';
 	ifstream login;
 	login.open(LOGIN_FILE);
 	if (!login.is_open())
@@ -35,10 +40,19 @@ char login()
 	{
 		while (!login.eof())
 		{
+			if (check == '\n')
+				line += 1;
 			string temp;
-			getline(login, temp);
+			cout << "Username: ";
+			cin >> username;
+			if (line % 3 == 1)
+			{
+				getline(login, temp);
+			}
 			if (temp == username)
 			{
+				cout << "\nPassword: ";
+				cin >> password;
 				getline(login, temp);
 				if (temp == password)
 				{
@@ -54,11 +68,12 @@ char login()
 				else		
 				throw Exceptions("Incorrect Password");
 			}
+			else
+			throw Exceptions("Username does not exist");
 		}
-		throw Exceptions("Username does not exist");
 	}
 }
-
+// throw Exceptions("Username does not exist");
 void adminMenu() 
 {
 	Inventory inventory;
@@ -96,26 +111,38 @@ void adminMenu()
 	}
 
 }
-
+// Mikey M
 void customerMenu() 
 {
+	Cart cart;
+	Inventory inventory;
 	int pickOption;
+	inventory.displayInventory();
+	cout << "Hello valued customer! Please select the desired option." << endl;
+	cout << "[1] Add item to cart" << endl;
+	cout << "[2] Remove item from cart" << endl;
+	cout << "[3] List items in cart" << endl;
+	cout << "[4] Checkout" << endl;
+	cout << "Input any other number to quit" << endl;
+	cout << "Option: ";
+	cin >> pickOption;
+	cout << endl;
 	switch (pickOption)
 	{
 	case 1:
-		//Add Inventory Item to cart
+		cart.addToCart();
 		break;
 	case 2:
-		//REmove Item form cart
+		cart.removeFromCart();
 		break;
 	case 3:
-		//Display Cart
+		cart.displayCart();
 		break;
 	case 4: 
-		//Checkout
+		cart.calculateTotalPrice();
 		break;
 	default:
-		//Quit
+		return;
 		break;
 	}
 }
@@ -242,37 +269,76 @@ void Inventory::exportInventory()
 		inventoryFile << i->fileFormat() << endl;
 	}
 }
+// Mikey M
+Cart::Cart()
+{
 
-//Michael K
+}
+// Mikey M
+Cart::~Cart()
+{
+
+}
+// Mikey M
+void Cart::addToCart()
+{
+	cout << "Which aisle would you like to add from?" << endl;
+	int index = 0;
+	for (string i : CATEGORY_NAMES)
+	{
+		cout << i << " " << "[" << index << "]" << endl;
+		index++;
+	}
+	customerMenu();
+}
+// Mikey M
+void Cart::removeFromCart()
+{
+	cout << "What would you like to remove?" << endl;
+	customerMenu();
+}
+// Mikey M
+void Cart::displayCart()
+{
+	cout << "There are X items in your cart." << endl;
+	customerMenu();
+}
+// Mikey M
+void Cart::calculateTotalPrice()
+{
+	cout << "The X items purchased cost a total of Y." << endl;
+	customerMenu();
+}
+
+
 string Item::fileFormat()
+
 {
+
 	return to_string(itemCategory) + " " + name + " " + to_string(price);
+
 }
 
-//Michael K
-string Item::getName()
-{
-	return name;
-}
 
-//Michael K
+
 void Item::getDescription()
+
 {
+
 	cout << "Item Type: " << CATEGORY_NAMES[itemCategory] << " | ";
 	cout << "Item Name: " << name << " | ";
 	cout << "Price: $" << price << " | " << endl;
+
 }
 
-//Michael K
+
+
 Item::Item(int itemCatagory, string name, double price)
+
 {
+
 	this->itemCategory = itemCatagory;
 	this->name = name;
 	this->price = price;
-}
 
-//Michael M
-Exceptions::Exceptions(string message)
-{
-	this->message = message;
 }

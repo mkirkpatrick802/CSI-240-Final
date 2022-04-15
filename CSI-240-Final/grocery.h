@@ -12,7 +12,6 @@ const string INVENTORY_FILE = "inventory.dat";
 const string LOGIN_FILE = "login.dat";
 const string ADMIN_USER = "admin";
 const string CUSTOMER_USER = "customer";
-
 const enum category
 {
 	NULL_CATAGORY = 0,
@@ -35,6 +34,7 @@ class Exceptions
 {
 public:
 	Exceptions(string message = "");
+	string getMessage();
 private:
 	string message;
 };
@@ -83,6 +83,7 @@ public:
 	~Cart();
 
 	void addToCart();
+	void removeFromCart();
 	void displayCart();
 	void calculateTotalPrice();
 private:
