@@ -122,12 +122,16 @@ void customerMenu()
 
 Inventory::Inventory()
 {
-
+	inventoryList.resize(0);
 }
 
 Inventory::~Inventory()
 {
-
+	for (Item* i : inventoryList)
+	{
+		delete i;
+	}
+	inventoryList.clear();
 }
 
 //Michael K

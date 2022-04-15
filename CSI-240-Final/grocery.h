@@ -46,6 +46,8 @@ public:
 	Item(int itemCatagory, string name, double price);
 	void getDescription();
 
+	virtual int totalAmount() = 0;
+
 	string fileFormat();
 	string getName();
 
@@ -93,6 +95,7 @@ class Meats : public Item
 public:
 
 private:
+	float tax;
 };
 
 class Vegetables : public Item
@@ -100,6 +103,7 @@ class Vegetables : public Item
 public:
 
 private:
+	float tax;
 };
 
 class Fruits : public Item
@@ -107,6 +111,7 @@ class Fruits : public Item
 public:
 
 private:
+	float tax;
 };
 
 class BakedGoods : public Item
@@ -114,6 +119,7 @@ class BakedGoods : public Item
 public:
 
 private:
+	float tax;
 };
 
 class Snacks : public Item
@@ -121,6 +127,8 @@ class Snacks : public Item
 public:
 
 private:
+	float tax;
+	float sugarTax;
 };
 
 class Drinks : public Item
@@ -128,4 +136,5 @@ class Drinks : public Item
 public:
 
 private:
+	float tax;
 };
