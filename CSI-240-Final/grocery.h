@@ -8,7 +8,8 @@
 using namespace std;
 
 //Global Constants
-const string INVENTORY_FILE_NAME = "inventory.dat";
+const string INVENTORY_FILE = "inventory.dat";
+const string LOGIN_FILE = "login.dat";
 const string ADMIN_USER = "admin";
 const string CUSTOMER_USER = "customer";
 

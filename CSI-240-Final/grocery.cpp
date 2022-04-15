@@ -11,9 +11,6 @@ void startMenu()
 	case 'c':
 		customerMenu();
 		break;
-	default:
-		Exceptions("something went wrong");
-		break;
 	}
 }
 
@@ -29,10 +26,10 @@ char login()
 	cin >> password;
 
 	ifstream login;
-	login.open("login.dat");
+	login.open(LOGIN_FILE);
 	if (!login.is_open())
 	{
-		throw Exceptions("Error - File cannot be found");
+		throw Exceptions("Can't Open " + LOGIN_FILE);
 	}
 	else
 	{
@@ -207,9 +204,9 @@ void Inventory::displayInventory()
 void Inventory::importInventory()
 {
 	ifstream inventoryFile;
-	if (!inventoryFile.is_open()) { throw Exceptions("Error - File not found"); }
+	inventoryFile.open(INVENTORY_FILE);
 
-	if (!inventoryFile.is_open()) { /*throw exception*/ }
+	if (!inventoryFile.is_open()) { throw Exceptions("Can't Open " + INVENTORY_FILE); }
 
 	while (!inventoryFile.eof()) 
 	{
@@ -232,9 +229,9 @@ void Inventory::importInventory()
 void Inventory::exportInventory()
 {
 	ofstream inventoryFile;
-	inventoryFile.open(INVENTORY_FILE_NAME);
+	inventoryFile.open(INVENTORY_FILE);
 
-	if (!inventoryFile.is_open()) { /*throw exception*/ }
+	if (!inventoryFile.is_open()) { throw Exceptions("Can't Open " + INVENTORY_FILE); }
 
 	for (Item* i : inventoryList)
 	{
