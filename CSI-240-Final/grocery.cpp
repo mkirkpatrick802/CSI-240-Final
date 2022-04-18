@@ -19,6 +19,9 @@ void startMenu()
 	case 'c':
 		customerMenu();
 		break;
+	case 'r':
+		startMenu();
+		break;
 	}
 }
 
@@ -28,8 +31,6 @@ char login()
 {
 	string username;
 	string password;
-	int line = 1;
-	char check = 'null';
 	ifstream login;
 	login.open(LOGIN_FILE);
 	if (!login.is_open())
@@ -38,40 +39,35 @@ char login()
 	}
 	else
 	{
+		cout << "Username: ";
+		cin >> username;
 		while (!login.eof())
 		{
-			if (check == '\n')
-				line += 1;
-			string temp;
-			cout << "Username: ";
-			cin >> username;
-			if (line % 3 == 1)
+			string line;
+			getline(login, line);
+			if (line != username) continue;
+			if (line == ADMIN_USER) 
 			{
-				getline(login, temp);
-			}
-			if (temp == username)
-			{
-				cout << "\nPassword: ";
+				cout << "Password: ";
 				cin >> password;
-				getline(login, temp);
-				if (temp == password)
-				{
-					if (username == ADMIN_USER)
-					{
-						return 'a';
-					}
-					else
-					{
-						return 'c';
-					}
-				}
-				else		
-				throw Exceptions("Incorrect Password");
+
+				getline(login, line);
+				if (line != password) { throw Exceptions("Incorrect Password"); return 'r'; }
+				return 'a';
 			}
-			else
-			throw Exceptions("Username does not exist");
+			else if(line == CUSTOMER_USER)
+			{
+				cout << "Password: ";
+				cin >> password;
+
+				getline(login, line);
+				if (line != password) { throw Exceptions("Incorrect Password"); return 'r'; }
+				return 'c';
+			}
 		}
+		throw Exceptions("Username does not exist");
 	}
+	return 'r';
 }
 // throw Exceptions("Username does not exist");
 void adminMenu() 
@@ -312,23 +308,27 @@ void Cart::calculateTotalPrice()
 
 
 string Item::fileFormat()
-
 {
-
 	return to_string(itemCategory) + " " + name + " " + to_string(price);
-
 }
 
-
+string Item::getName()
+{
+	return name;
+}
 
 void Item::getDescription()
-
 {
 
 	cout << "Item Type: " << CATEGORY_NAMES[itemCategory] << " | ";
 	cout << "Item Name: " << name << " | ";
 	cout << "Price: $" << price << " | " << endl;
 
+}
+
+int Item::totalAmount()
+{
+	return 0;
 }
 
 

@@ -39,23 +39,25 @@ private:
 	string message;
 };
 
-class Item
+class Stock
 {
 public:
-
-	Item(int itemCatagory, string name, double price);
-	void getDescription();
-
 	virtual int totalAmount() = 0;
-
-	string fileFormat();
-	string getName();
-
-private:
+protected:
 	int itemCategory;
 	string name;
 	double price;
 	double amount;
+};
+
+class Item : public Stock
+{
+public:
+	Item(int itemCatagory, string name, double price);
+	void getDescription();
+	int totalAmount();
+	string fileFormat();
+	string getName();
 };
 
 class Inventory
@@ -91,10 +93,13 @@ private:
 };
 
 
-class Meats : public Item 
+class Meats : public Item
 {
 public:
+	int totalAmount()
+	{
 
+	}
 private:
 	float tax;
 };
@@ -102,7 +107,6 @@ private:
 class Vegetables : public Item
 {
 public:
-
 private:
 	float tax;
 };
@@ -110,7 +114,6 @@ private:
 class Fruits : public Item
 {
 public:
-
 private:
 	float tax;
 };
@@ -118,7 +121,6 @@ private:
 class BakedGoods : public Item
 {
 public:
-
 private:
 	float tax;
 };
@@ -126,7 +128,6 @@ private:
 class Snacks : public Item
 {
 public:
-
 private:
 	float tax;
 	float sugarTax;
@@ -135,7 +136,6 @@ private:
 class Drinks : public Item
 {
 public:
-
 private:
 	float tax;
 };

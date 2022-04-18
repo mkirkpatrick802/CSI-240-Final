@@ -9,7 +9,6 @@ int main()
 	catch (Exceptions e)
 	{
 		cout << e.getMessage() << endl;
-		startMenu();
 	}
 }
 
