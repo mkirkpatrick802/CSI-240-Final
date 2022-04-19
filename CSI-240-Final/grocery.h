@@ -58,9 +58,10 @@ public:
 	Item();
 	Item(int itemCatagory, string name, double price);
 	void getDescription();
-	int totalAmount();
+	int totalAmount(Item i) override;
 	string fileFormat();
 	string getName();
+	double operator*(const Item& left);
 };
 
 class Inventory

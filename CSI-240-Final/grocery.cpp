@@ -368,11 +368,17 @@ void Item::getDescription()
 
 }
 
-int Item::totalAmount()
+double Item::operator*(const Item& left)
 {
-	return 0;
+	double subtotal = left.price * left.amount;
+	double afterTax = subtotal * CATEGORY_TAXS[left.itemCategory];
+	return afterTax;
 }
 
+int Item::totalAmount(Item i)
+{
+	return i.operator*(i);
+}
 
 
 Item::Item()
@@ -383,13 +389,10 @@ Item::Item()
 }
 
 Item::Item(int itemCatagory, string name, double price)
-
 {
-
 	this->itemCategory = itemCatagory;
 	this->name = name;
 	this->price = price;
-
 }
 
 Meats::Meats()
