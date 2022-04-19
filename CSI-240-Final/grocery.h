@@ -43,6 +43,7 @@ private:
 class Stock
 {
 public:
+	Stock();
 	virtual int totalAmount() = 0;
 protected:
 	int itemCategory;
@@ -54,6 +55,7 @@ protected:
 class Item : public Stock
 {
 public:
+	Item();
 	Item(int itemCatagory, string name, double price);
 	void getDescription();
 	int totalAmount();
@@ -90,42 +92,54 @@ public:
 	void displayCart();
 	void calculateTotalPrice();
 private:
-	vector<Item> cart;
+	vector<Item*> cart;
 };
 
 
 class Meats : public Item
 {
 public:
+	Meats();
+	Meats(string name, double price);
 	int totalAmount();
 };
 
 class Vegetables : public Item
 {
 public:
+	Vegetables();
+	Vegetables(string name, double price);
 	int totalAmount();
 };
 
 class Fruits : public Item
 {
 public:
+	Fruits();
+	Fruits(string name, double price);
 	int totalAmount();
 };
 
 class BakedGoods : public Item
 {
 public:
+	BakedGoods();
+	BakedGoods(string name, double price);
 	int totalAmount();
 };
 
 class Snacks : public Item
 {
 public:
+	Snacks();
+	Snacks(string name, double price);
 	int totalAmount();
 };
 
 class Drinks : public Item
 {
 public:
+	Drinks();
+	Drinks(string name, double price);
 	int totalAmount();
 };

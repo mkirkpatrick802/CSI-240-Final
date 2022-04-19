@@ -247,7 +247,7 @@ void Inventory::importInventory()
 
 		if (name.empty()) continue; // Skips empty lines in file
 
-		inventoryList.push_back(new Item(categoryNum, name, price));
+		;
 	}
 
 	cout << endl << "[[IMPORT SUCCESSFUL]]" << endl;
@@ -279,6 +279,8 @@ Cart::~Cart()
 // Mikey M
 void Cart::addToCart()
 {
+	vector<Item*> aisleItems;
+	int chosenItem;
 	int option;
 	ifstream inventoryFile;
 	inventoryFile.open(INVENTORY_FILE);
@@ -295,24 +297,50 @@ void Cart::addToCart()
 	cout << "Aisle: ";
 	cin >> option;
 
+	index = 0;
 	while (!inventoryFile.eof()) 
 	{
+		int categoryNum;
+		inventoryFile >> categoryNum;
+		if (categoryNum == option)
+		{
+			index++;
 
+			string name;
+			double price;
+			inventoryFile >> name;
+			inventoryFile >> price;
+
+			aisleItems.push_back(new Item(categoryNum, name, price));
+			aisleItems[index--]->getDescription();
+		}
+		else
+			inventoryFile.ignore('\n');
 	}
+	cout << endl;
+	cout << "Which item would you like to purchase?: ";
+	cin >> chosenItem;
+
+	//cart.push_back(aisleItems[chosenItem]);
+	//cart[1]->getDescription();
+
 	customerMenu();
 }
+
 // Mikey M
 void Cart::removeFromCart()
 {
 	cout << "What would you like to remove?" << endl;
 	customerMenu();
 }
+
 // Mikey M
 void Cart::displayCart()
 {
 	cout << "There are X items in your cart." << endl;
 	customerMenu();
 }
+
 // Mikey M
 void Cart::calculateTotalPrice()
 {
@@ -347,6 +375,13 @@ int Item::totalAmount()
 
 
 
+Item::Item()
+{
+	itemCategory = 0;
+	name = "";
+	price = 0;
+}
+
 Item::Item(int itemCatagory, string name, double price)
 
 {
@@ -355,4 +390,103 @@ Item::Item(int itemCatagory, string name, double price)
 	this->name = name;
 	this->price = price;
 
+}
+
+Meats::Meats()
+{
+	itemCategory = 1;
+}
+
+Meats::Meats(string name, double price)
+{
+	this->name = name;
+	this->price = price;
+}
+
+int Meats::totalAmount()
+{
+	return 0;
+}
+
+Vegetables::Vegetables()
+{
+}
+
+Vegetables::Vegetables(string name, double price)
+{
+	this->name = name;
+	this->price = price;
+}
+
+int Vegetables::totalAmount()
+{
+	return 0;
+}
+
+Fruits::Fruits()
+{
+}
+
+Fruits::Fruits(string name, double price)
+{
+	this->name = name;
+	this->price = price;
+}
+
+int Fruits::totalAmount()
+{
+	return 0;
+}
+
+BakedGoods::BakedGoods()
+{
+}
+
+BakedGoods::BakedGoods(string name, double price)
+{
+	this->name = name;
+	this->price = price;
+}
+
+int BakedGoods::totalAmount()
+{
+	return 0;
+}
+
+Snacks::Snacks()
+{
+}
+
+Snacks::Snacks(string name, double price)
+{
+	this->name = name;
+	this->price = price;
+}
+
+int Snacks::totalAmount()
+{
+	return 0;
+}
+
+Drinks::Drinks()
+{
+}
+
+Drinks::Drinks(string name, double price)
+{
+	this->name = name;
+	this->price = price;
+}
+
+int Drinks::totalAmount()
+{
+	return 0;
+}
+
+Stock::Stock()
+{
+	itemCategory = 0;
+	name = "";
+	price = 0;
+	amount = 0;
 }
