@@ -14,7 +14,7 @@ const string ADMIN_USER = "admin";
 const string CUSTOMER_USER = "customer";
 const enum category
 {
-	NULL_CATAGORY = 0,
+	Service = 0,
 	MEAT,
 	VEGETABLE,
 	FRUIT,
@@ -22,8 +22,8 @@ const enum category
 	SNACKS,
 	DRINK
 };
-const string CATEGORY_NAMES[] = { "Null", "Meat", "Vegetable", "Fruit", "Baked Good", "Snack", "Drink" };
-const double CATEGORY_TAXS[] = {0, 0.2, 0.05, 0.15, 0.5, 0.5, 0.3};
+const string CATEGORY_NAMES[] = { "Service", "Meat", "Vegetable", "Fruit", "Baked Good", "Snack", "Drink" };
+const double CATEGORY_TAXS[] = {.5, 0.2, 0.05, 0.15, 0.5, 0.5, 0.3};
 
 //Global Functions
 char login();
@@ -40,35 +40,56 @@ private:
 	string message;
 };
 
-class Stock
+class Vendor
 {
 public:
-	Stock();
+	Vendor();
+	Vendor(string name, double price);
 	virtual int totalAmount() = 0;
+	virtual string fileFormat() = 0;
+	virtual string getName() = 0;
+	virtual void getDescription() = 0;
 protected:
-	int itemCategory;
 	string name;
 	double price;
-	double amount;
 };
 
-class Item : public Stock
+class Item : public Vendor
 {
 public:
 	Item();
 	Item(int itemCatagory, string name, double price);
-	void getDescription();
-	int totalAmount(Item i) override;
-	string fileFormat();
-	string getName();
+	Item(int itemCatagory, int amount, string name, double price);
+
+	void getDescription() override;
+	int totalAmount() override;
+	string fileFormat() override;
+	string getName() override;
+
 	double operator*(const Item& left);
+
+private:
+	int itemCategory;
+	double amount;
 };
+
+//class Service : public Vendor
+//{
+//public:
+//	Service();
+//	Service(string phoneNumber);
+//
+//	int totalAmount() override;
+//	string fileFormat() override;
+//
+//private:
+//	string phoneNumber;
+//};
 
 class Inventory
 {
 public:
 	Inventory();
-
 	~Inventory();
 
 	void addToInventory();
@@ -77,70 +98,22 @@ public:
 
 	void importInventory();
 	void exportInventory();
+
 private:
-	vector<Item*> inventoryList;
+	vector<Vendor*> inventoryList;
 };
 
 class Cart
 {
 public:
 	Cart();
-
 	~Cart();
 
 	void addToCart();
 	void removeFromCart();
 	void displayCart();
 	void calculateTotalPrice();
+
 private:
-	vector<Item*> cart;
-};
-
-
-class Meats : public Item
-{
-public:
-	Meats();
-	Meats(string name, double price);
-	int totalAmount();
-};
-
-class Vegetables : public Item
-{
-public:
-	Vegetables();
-	Vegetables(string name, double price);
-	int totalAmount();
-};
-
-class Fruits : public Item
-{
-public:
-	Fruits();
-	Fruits(string name, double price);
-	int totalAmount();
-};
-
-class BakedGoods : public Item
-{
-public:
-	BakedGoods();
-	BakedGoods(string name, double price);
-	int totalAmount();
-};
-
-class Snacks : public Item
-{
-public:
-	Snacks();
-	Snacks(string name, double price);
-	int totalAmount();
-};
-
-class Drinks : public Item
-{
-public:
-	Drinks();
-	Drinks(string name, double price);
-	int totalAmount();
+	vector<Vendor*> cart;
 };

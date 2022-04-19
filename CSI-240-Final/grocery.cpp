@@ -151,7 +151,7 @@ Inventory::Inventory()
 
 Inventory::~Inventory()
 {
-	for (Item* i : inventoryList)
+	for (Vendor* i : inventoryList)
 	{
 		delete i;
 	}
@@ -222,7 +222,7 @@ void Inventory::deleteItemFromInventory()
 //Michael K
 void Inventory::displayInventory()
 {
-	for (Item* i : inventoryList)
+	for (Vendor* i : inventoryList)
 	{
 		i->getDescription();
 	}
@@ -246,8 +246,7 @@ void Inventory::importInventory()
 		inventoryFile >> price;
 
 		if (name.empty()) continue; // Skips empty lines in file
-
-		;
+		inventoryList.push_back(new Item(categoryNum, name, price));
 	}
 
 	cout << endl << "[[IMPORT SUCCESSFUL]]" << endl;
@@ -261,7 +260,7 @@ void Inventory::exportInventory()
 
 	if (!inventoryFile.is_open()) { throw Exceptions("Can't Open " + INVENTORY_FILE); }
 
-	for (Item* i : inventoryList)
+	for (Vendor* i : inventoryList)
 	{
 		inventoryFile << i->fileFormat() << endl;
 	}
@@ -359,6 +358,7 @@ string Item::getName()
 	return name;
 }
 
+//Michael K
 void Item::getDescription()
 {
 
@@ -375,121 +375,37 @@ double Item::operator*(const Item& left)
 	return afterTax;
 }
 
-int Item::totalAmount(Item i)
+int Item::totalAmount()
 {
-	return i.operator*(i);
+	return 0;
 }
 
-
-Item::Item()
+Vendor::Vendor()
 {
-	itemCategory = 0;
 	name = "";
 	price = 0;
 }
 
-Item::Item(int itemCatagory, string name, double price)
+Vendor::Vendor(string name, double price)
+{
+	this->name = name;
+	this->price = price;
+}
+
+Item::Item() : Vendor()
+{
+	itemCategory = 0;
+	amount = 0;
+}
+
+Item::Item(int itemCatagory, string name, double price) : Vendor(name, price)
 {
 	this->itemCategory = itemCatagory;
-	this->name = name;
-	this->price = price;
-}
-
-Meats::Meats()
-{
-	itemCategory = 1;
-}
-
-Meats::Meats(string name, double price)
-{
-	this->name = name;
-	this->price = price;
-}
-
-int Meats::totalAmount()
-{
-	return 0;
-}
-
-Vegetables::Vegetables()
-{
-}
-
-Vegetables::Vegetables(string name, double price)
-{
-	this->name = name;
-	this->price = price;
-}
-
-int Vegetables::totalAmount()
-{
-	return 0;
-}
-
-Fruits::Fruits()
-{
-}
-
-Fruits::Fruits(string name, double price)
-{
-	this->name = name;
-	this->price = price;
-}
-
-int Fruits::totalAmount()
-{
-	return 0;
-}
-
-BakedGoods::BakedGoods()
-{
-}
-
-BakedGoods::BakedGoods(string name, double price)
-{
-	this->name = name;
-	this->price = price;
-}
-
-int BakedGoods::totalAmount()
-{
-	return 0;
-}
-
-Snacks::Snacks()
-{
-}
-
-Snacks::Snacks(string name, double price)
-{
-	this->name = name;
-	this->price = price;
-}
-
-int Snacks::totalAmount()
-{
-	return 0;
-}
-
-Drinks::Drinks()
-{
-}
-
-Drinks::Drinks(string name, double price)
-{
-	this->name = name;
-	this->price = price;
-}
-
-int Drinks::totalAmount()
-{
-	return 0;
-}
-
-Stock::Stock()
-{
-	itemCategory = 0;
-	name = "";
-	price = 0;
 	amount = 0;
+}
+
+Item::Item(int itemCatagory, int amount, string name, double price)
+{
+	this->itemCategory = itemCatagory;
+	this->amount = amount;
 }
