@@ -69,7 +69,8 @@ char login()
 	}
 	return 'r';
 }
-// throw Exceptions("Username does not exist");
+
+//Michael K
 void adminMenu() 
 {
 	Inventory inventory;
@@ -278,12 +279,25 @@ Cart::~Cart()
 // Mikey M
 void Cart::addToCart()
 {
+	int option;
+	ifstream inventoryFile;
+	inventoryFile.open(INVENTORY_FILE);
+	if (!inventoryFile.is_open()) { throw Exceptions("Can't Open " + INVENTORY_FILE); }
+
 	cout << "Which aisle would you like to add from?" << endl;
 	int index = 0;
 	for (string i : CATEGORY_NAMES)
 	{
 		cout << i << " " << "[" << index << "]" << endl;
 		index++;
+	}
+
+	cout << "Aisle: ";
+	cin >> option;
+
+	while (!inventoryFile.eof()) 
+	{
+
 	}
 	customerMenu();
 }

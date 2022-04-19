@@ -23,6 +23,7 @@ const enum category
 	DRINK
 };
 const string CATEGORY_NAMES[] = { "Null", "Meat", "Vegetable", "Fruit", "Baked Good", "Snack", "Drink" };
+const double CATEGORY_TAXS[] = {0, 0.2, 0.05, 0.15, 0.5, 0.5, 0.3};
 
 //Global Functions
 char login();
@@ -96,46 +97,35 @@ private:
 class Meats : public Item
 {
 public:
-	int totalAmount()
-	{
-
-	}
-private:
-	float tax;
+	int totalAmount();
 };
 
 class Vegetables : public Item
 {
 public:
-private:
-	float tax;
+	int totalAmount();
 };
 
 class Fruits : public Item
 {
 public:
-private:
-	float tax;
+	int totalAmount();
 };
 
 class BakedGoods : public Item
 {
 public:
-private:
-	float tax;
+	int totalAmount();
 };
 
 class Snacks : public Item
 {
 public:
-private:
-	float tax;
-	float sugarTax;
+	int totalAmount();
 };
 
 class Drinks : public Item
 {
 public:
-private:
-	float tax;
+	int totalAmount();
 };
