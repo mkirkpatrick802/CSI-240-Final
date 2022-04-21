@@ -79,68 +79,73 @@ void adminMenu()
 	inventory.importInventory();
 	int pickOption = 0;
 
-	cout << endl;
-	cout << "Please Select How You'd Like to Proceed" << endl;
-	cout << "[1] Add Item To Inventory" << endl;
-	cout << "[2] Delete Item From Inventory" << endl;
-	cout << "[3] Display Inventory" << endl;
-	cout << "[4] Save and Quit" << endl;
-	cout << "Please Select One To Continue: ";
-	cin >> pickOption;
-	cout << endl;
-	
-	switch (pickOption)
+	while (pickOption != 4) 
 	{
-	case 1:
-		inventory.addToInventory();
-		break;
-	case 2:
-		inventory.deleteItemFromInventory();
-		break;
-	case 3:
-		inventory.displayInventory();
-		break;
-	default:
-		inventory.exportInventory();
-		return;
-		break;
+		cout << endl;
+		cout << "Please Select How You'd Like to Proceed" << endl;
+		cout << "[1] Add Item To Inventory" << endl;
+		cout << "[2] Delete Item From Inventory" << endl;
+		cout << "[3] Display Inventory" << endl;
+		cout << "[4] Save and Quit" << endl;
+		cout << "Please Select One To Continue: ";
+		cin >> pickOption;
+		cout << endl;
+
+		switch (pickOption)
+		{
+		case 1:
+			inventory.addToInventory();
+			break;
+		case 2:
+			inventory.deleteItemFromInventory();
+			break;
+		case 3:
+			inventory.displayInventory();
+			break;
+		default:
+			inventory.exportInventory();
+			return;
+			break;
+		}
 	}
 
 }
 // Mikey M
 void customerMenu() 
 {
-	cout << endl;
-
 	Cart cart;
-	Inventory inventory;
-	int pickOption;
-	cout << "Hello valued customer! Please select the desired option." << endl;
-	cout << "[1] Add item to cart" << endl;
-	cout << "[2] Remove item from cart" << endl;
-	cout << "[3] List items in cart" << endl;
-	cout << "[4] Checkout" << endl;
-	cout << "Input any other number to quit" << endl;
-	cout << "Option: ";
-	cin >> pickOption;
-	cout << endl;
-	switch (pickOption)
+	int pickOption = 0;
+
+	while (pickOption != 5)
 	{
-	case 1:
-		cart.addToCart();
-		break;
-	case 2:
-		cart.removeFromCart();
-		break;
-	case 3:
-		cart.displayCart();
-		break;
-	case 4: 
-		cart.calculateTotalPrice();
-		break;
-	default:
-		return;
-		break;
+		cout << endl;
+		cout << "Hello valued customer! Please select the desired option." << endl;
+		cout << "[1] Add item to cart" << endl;
+		cout << "[2] Remove item from cart" << endl;
+		cout << "[3] List items in cart" << endl;
+		cout << "[4] Checkout" << endl;
+		cout << "[5] Quit" << endl;
+		cout << "Option: ";
+		cin >> pickOption;
+		cout << endl;
+		switch (pickOption)
+		{
+		case 1:
+			cart.addToCart();
+			break;
+		case 2:
+			cart.removeFromCart();
+			break;
+		case 3:
+			cart.displayCart();
+			break;
+		case 4:
+			cart.calculateTotalPrice();
+			break;
+		case 5:
+			return;
+			break;
+		}
 	}
 }
 
@@ -192,8 +197,6 @@ void Inventory::addToInventory()
 
 		cout << endl;
 	} while (option == 1);
-
-	adminMenu();
 }
 
 //Michael K
@@ -221,8 +224,6 @@ void Inventory::deleteItemFromInventory()
 		cout << endl;
 
 	} while (option == 1);
-
-	adminMenu();
 }
 
 //Michael K
@@ -232,8 +233,6 @@ void Inventory::displayInventory()
 	{
 		i->getDescription();
 	}
-
-	adminMenu();
 }
 
 //Michael K
@@ -359,15 +358,12 @@ void Cart::addToCart()
 
 		cout << endl;
 	} while (continueOption != 0);
-
-	customerMenu();
 }
 
 // Mikey M
 void Cart::removeFromCart()
 {
 	cout << "What would you like to remove?" << endl;
-	customerMenu();
 }
 
 //Michael K
@@ -378,14 +374,12 @@ void Cart::displayCart()
 	{
 		i->getDescription();
 	}
-	customerMenu();
 }
 
 // Mikey M
 void Cart::calculateTotalPrice()
 {
 	cout << "The X items purchased cost a total of Y." << endl;
-	customerMenu();
 }
 
 
