@@ -1,5 +1,6 @@
 #include "grocery.h"
 
+//Mikey M
 Exceptions::Exceptions(string message)
 {
 	this->message = message;
@@ -9,6 +10,7 @@ string Exceptions::getMessage()
 	return message;
 }
 
+//Michael K
 void startMenu() 
 {
 	switch (login())
@@ -76,45 +78,43 @@ void adminMenu()
 	Inventory inventory;
 	inventory.importInventory();
 	int pickOption = 0;
-	while (pickOption != 4)
+
+	cout << endl;
+	cout << "Please Select How You'd Like to Proceed" << endl;
+	cout << "[1] Add Item To Inventory" << endl;
+	cout << "[2] Delete Item From Inventory" << endl;
+	cout << "[3] Display Inventory" << endl;
+	cout << "[4] Save and Quit" << endl;
+	cout << "Please Select One To Continue: ";
+	cin >> pickOption;
+	cout << endl;
+	
+	switch (pickOption)
 	{
-
-		cout << endl;
-		cout << "Please Select How You'd Like to Proceed" << endl;
-		cout << "[1] Add Item To Inventory" << endl;
-		cout << "[2] Delete Item From Inventory" << endl;
-		cout << "[3] Display Inventory" << endl;
-		cout << "[4] Save and Quit" << endl;
-		cout << "Please Select One To Continue: ";
-		cin >> pickOption;
-		cout << endl;
-
-		switch (pickOption)
-		{
-		case 1:
-			inventory.addToInventory();
-			break;
-		case 2:
-			inventory.deleteItemFromInventory();
-			break;
-		case 3:
-			inventory.displayInventory();
-			break;
-		default:
-			inventory.exportInventory();
-			return;
-			break;
-		}
+	case 1:
+		inventory.addToInventory();
+		break;
+	case 2:
+		inventory.deleteItemFromInventory();
+		break;
+	case 3:
+		inventory.displayInventory();
+		break;
+	default:
+		inventory.exportInventory();
+		return;
+		break;
 	}
 
 }
 // Mikey M
 void customerMenu() 
 {
+	cout << endl;
+
 	Cart cart;
 	Inventory inventory;
 	int pickOption;
-	inventory.displayInventory();
 	cout << "Hello valued customer! Please select the desired option." << endl;
 	cout << "[1] Add item to cart" << endl;
 	cout << "[2] Remove item from cart" << endl;
@@ -144,11 +144,13 @@ void customerMenu()
 	}
 }
 
+//Michael K
 Inventory::Inventory()
 {
 	inventoryList.resize(0);
 }
 
+//Michael K
 Inventory::~Inventory()
 {
 	for (Vendor* i : inventoryList)
@@ -190,6 +192,8 @@ void Inventory::addToInventory()
 
 		cout << endl;
 	} while (option == 1);
+
+	adminMenu();
 }
 
 //Michael K
@@ -217,6 +221,8 @@ void Inventory::deleteItemFromInventory()
 		cout << endl;
 
 	} while (option == 1);
+
+	adminMenu();
 }
 
 //Michael K
@@ -226,6 +232,8 @@ void Inventory::displayInventory()
 	{
 		i->getDescription();
 	}
+
+	adminMenu();
 }
 
 //Michael K
@@ -268,14 +276,19 @@ void Inventory::exportInventory()
 // Mikey M
 Cart::Cart()
 {
-
+	cart.resize(0);
 }
 // Mikey M
 Cart::~Cart()
 {
-
+	for (Vendor* i : cart)
+	{
+		delete i;
+	}
+	cart.clear();
 }
-// Mikey M
+
+//Michael K
 void Cart::addToCart()
 {
 	vector<Item*> aisleItems;
@@ -296,32 +309,56 @@ void Cart::addToCart()
 	cout << "Aisle: ";
 	cin >> option;
 
-	index = 0;
+	cout << endl;
+
 	while (!inventoryFile.eof()) 
 	{
 		int categoryNum;
 		inventoryFile >> categoryNum;
 		if (categoryNum == option)
 		{
-			index++;
-
 			string name;
 			double price;
 			inventoryFile >> name;
 			inventoryFile >> price;
 
 			aisleItems.push_back(new Item(categoryNum, name, price));
-			aisleItems[index--]->getDescription();
 		}
 		else
-			inventoryFile.ignore('\n');
+		{
+			inventoryFile.ignore(1000, '\n');
+		}
 	}
-	cout << endl;
-	cout << "Which item would you like to purchase?: ";
-	cin >> chosenItem;
 
-	//cart.push_back(aisleItems[chosenItem]);
-	//cart[1]->getDescription();
+	int continueOption = 1;
+	int amount;
+	do
+	{
+		int index = 0;
+		for (Item* i : aisleItems) 
+		{
+			cout << "[" << index << "]";
+			i->getDescription();
+			index++;
+		}
+
+		cout << endl;
+		cout << "Which item would you like to purchase?: ";
+		cin >> chosenItem;
+
+		if (chosenItem > aisleItems.size() - 1) { cout << "Please Enter a Valid Item" << endl; cout << endl; continue; }
+
+		cout << "How many would you like?: ";
+		cin >> amount;
+
+		Item* itemToAdd = new Item(aisleItems[chosenItem]->getItemCategory(), amount, aisleItems[chosenItem]->getName(), aisleItems[chosenItem]->getPrice());
+		cart.push_back(itemToAdd);
+
+		cout << "Add Another? [0 for No] [1 for Yes]: ";
+		cin >> continueOption;
+
+		cout << endl;
+	} while (continueOption != 0);
 
 	customerMenu();
 }
@@ -333,10 +370,14 @@ void Cart::removeFromCart()
 	customerMenu();
 }
 
-// Mikey M
+//Michael K
 void Cart::displayCart()
 {
-	cout << "There are X items in your cart." << endl;
+	cout << cart.size();
+	for (Vendor* i : cart) 
+	{
+		i->getDescription();
+	}
 	customerMenu();
 }
 
@@ -353,9 +394,24 @@ string Item::fileFormat()
 	return to_string(itemCategory) + " " + name + " " + to_string(price);
 }
 
-string Item::getName()
+int Item::getItemCategory()
+{
+	return itemCategory;
+}
+
+int Item::getAmount()
+{
+	return amount;
+}
+
+string Vendor::getName()
 {
 	return name;
+}
+
+double Vendor::getPrice()
+{
+	return price;
 }
 
 //Michael K
@@ -364,16 +420,23 @@ void Item::getDescription()
 
 	cout << "Item Type: " << CATEGORY_NAMES[itemCategory] << " | ";
 	cout << "Item Name: " << name << " | ";
-	cout << "Price: $" << price << " | " << endl;
-
+	cout << "Price: $" << price << " | ";
+	if (amount > 0) 
+	{
+		cout << "Amount: " << amount << " | " << endl;
+	}
+	else
+	{
+		cout << endl;
+	}
 }
 
-double Item::operator*(const Item& left)
-{
-	double subtotal = left.price * left.amount;
-	double afterTax = subtotal * CATEGORY_TAXS[left.itemCategory];
-	return afterTax;
-}
+//double Item::operator*(const Item& left)
+//{
+//	double subtotal = left.price * left.amount;
+//	double afterTax = subtotal * CATEGORY_TAXS[left.itemCategory];
+//	return afterTax;
+//}
 
 int Item::totalAmount()
 {
@@ -404,7 +467,7 @@ Item::Item(int itemCatagory, string name, double price) : Vendor(name, price)
 	amount = 0;
 }
 
-Item::Item(int itemCatagory, int amount, string name, double price)
+Item::Item(int itemCatagory, int amount, string name, double price) : Vendor(name, price)
 {
 	this->itemCategory = itemCatagory;
 	this->amount = amount;

@@ -45,9 +45,12 @@ class Vendor
 public:
 	Vendor();
 	Vendor(string name, double price);
+
+	string getName();
+	double getPrice();
+
 	virtual int totalAmount() = 0;
 	virtual string fileFormat() = 0;
-	virtual string getName() = 0;
 	virtual void getDescription() = 0;
 protected:
 	string name;
@@ -64,13 +67,15 @@ public:
 	void getDescription() override;
 	int totalAmount() override;
 	string fileFormat() override;
-	string getName() override;
 
-	double operator*(const Item& left);
+	int getItemCategory();
+	int getAmount();
+
+	//double operator*(const Item& left);
 
 private:
 	int itemCategory;
-	double amount;
+	int amount;
 };
 
 //class Service : public Vendor
