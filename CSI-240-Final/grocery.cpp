@@ -206,8 +206,8 @@ void Inventory::deleteItemFromInventory()
 	do 
 	{
 		string name;
-
-		cout << "Please Enter The Item You'd Like To Delete: ";
+		displayInventory();
+		cout << "\nPlease Enter The Item You'd Like To Delete: ";
 		cin >> name;
 
 		for (int i = 0; i < inventoryList.size(); i++) 
@@ -381,8 +381,28 @@ void Cart::addToCart()
 // Mikey M
 void Cart::removeFromCart()
 {
-	cout << "What would you like to remove?" << endl;
+	int option = 1;
+	do
+	{
+		displayCart();
+		string name;
+
+		cout << "What would you like to remove?" << endl;
+		cin >> name;
+
+		for (int i = 0; i < cart.size(); i++)
+		{
+			if (cart[i]->getName() != name) continue;
+
+			cart.erase(cart.begin() + i);
+		}
+		cout << "Would you like to remove another? [0 for No] [1 for Yes]: ";
+		cin >> option;
+
+		cout << endl;
+	} while (option == 1);
 }
+
 
 //Michael K
 void Cart::displayCart()
