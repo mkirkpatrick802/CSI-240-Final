@@ -291,57 +291,60 @@ void Cart::addToCart()
 {
 	vector<Vendor*> aisleItems;
 	int chosenItem;
-	int option;
 	ifstream inventoryFile;
 	inventoryFile.open(INVENTORY_FILE);
 	if (!inventoryFile.is_open()) { throw Exceptions("Can't Open " + INVENTORY_FILE); }
-
-	cout << "Which aisle would you like to add from?" << endl;
-	int index = 0;
-	for (string i : CATEGORY_NAMES)
-	{
-		cout << i << " " << "[" << index << "]" << endl;
-		index++;
-	}
-
-	cout << "Aisle: ";
-	cin >> option;
-
-	cout << endl;
-
-	while (!inventoryFile.eof()) 
-	{
-		int categoryNum;
-		inventoryFile >> categoryNum;
-		if (categoryNum == option)
-		{
-			string name;
-			double price;
-			inventoryFile >> name;
-			inventoryFile >> price;
-
-			if (categoryNum == SERVICE) 
-			{
-				aisleItems.push_back(new Service(name, price));
-			}
-			else 
-			{
-				aisleItems.push_back(new Item(categoryNum, name, price));
-			}
-		}
-		else
-		{
-			inventoryFile.ignore(1000, '\n');
-		}
-	}
-
-	int continueOption = 1;
-	int amount;
-	double phoneNumber;
+	int again = 0;
 	do
 	{
+		int option = -1;
 		int index = 0;
-		for (Vendor* i : aisleItems) 
+		for (string i : CATEGORY_NAMES)
+		{
+			cout << i << " " << "[" << index << "]" << endl;
+			index++;
+		}
+
+		cout << endl;
+
+		cout << "Which aisle would you like to add from?" << endl;
+		cout << "Aisle: ";
+		cin >> option;
+
+		cout << endl;
+
+		while (!inventoryFile.eof())
+		{
+			int categoryNum;
+			inventoryFile >> categoryNum;
+			if (categoryNum == option)
+			{
+				string name;
+				double price;
+				inventoryFile >> name;
+				inventoryFile >> price;
+
+				if (categoryNum == SERVICE)
+				{
+					aisleItems.push_back(new Service(name, price));
+				}
+				else
+				{
+					aisleItems.push_back(new Item(categoryNum, name, price));
+				}
+			}
+			else
+			{
+				inventoryFile.ignore(1000, '\n');
+			}
+		}
+
+		int amount;
+		double phoneNumber;
+
+
+		index = 0;
+		for (Vendor* i : aisleItems)
 		{
 			cout << "[" << index << "]";
 			i->getDescription();
@@ -371,10 +374,17 @@ void Cart::addToCart()
 		}
 
 		cout << "Add Another? [0 for No] [1 for Yes]: ";
-		cin >> continueOption;
+		cin >> again;
 
 		cout << endl;
-	} while (continueOption != 0);
+
+
+		for (Vendor* i : aisleItems)
+		{
+			delete i;
+		}
+		aisleItems.clear();
+	} while (again == 1);
 }
 
 // Mikey M
@@ -426,7 +436,7 @@ void Cart::calculateTotalPrice()
 		totalPrice += salesTaxAmount;
 	}
 
-	cout << "Total Cost: " << totalPrice;
+	cout << "Total Cost: $" << fixed << setprecision(2) << totalPrice;
 }
 
 //Michael K
