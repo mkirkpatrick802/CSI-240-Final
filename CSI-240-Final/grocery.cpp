@@ -28,7 +28,6 @@ void startMenu()
 }
 
 //Mikey M
-//Output char depending on result: a, or c
 char login() 
 {
 	string username;
@@ -414,38 +413,53 @@ void Cart::displayCart()
 	}
 }
 
-// Mikey M
+//Michael K
 void Cart::calculateTotalPrice()
 {
-	cout << "The X items purchased cost a total of Y." << endl;
+	double totalPrice = 0;
+	for (Vendor* i : cart)
+	{
+		double salesTaxAmount = 0;
+		i->getDescription();
+		salesTaxAmount += SALES_TAX * *i;
+		totalPrice = totalPrice + *i; 
+		totalPrice += salesTaxAmount;
+	}
+
+	cout << "Total Cost: " << totalPrice;
 }
 
-
+//Michael K
 string Item::fileFormat()
 {
 	return to_string(itemCategory) + " " + name + " " + to_string(price);
 }
 
+//Michael K
 int Item::getCategory()
 {
 	return itemCategory;
 }
 
+//Michael K
 int Item::getItemCategory()
 {
 	return itemCategory;
 }
 
+//Michael K
 int Item::getAmount()
 {
 	return amount;
 }
 
+//Michael K
 string Vendor::getName()
 {
 	return name;
 }
 
+//Michael K
 double Vendor::getPrice()
 {
 	return price;
@@ -468,18 +482,19 @@ void Item::getDescription()
 	}
 }
 
+//Mikey M
 double operator+(const double& left, Vendor& right)
 {
 
 	return left + right.totalAmount();
 }
 
+//Mikey M
 double operator*(const double& left, Vendor& right)
 {
 	
 	return left * right.totalAmount();
 }
-
 
 //Michael K
 double Item::totalAmount()
@@ -496,71 +511,83 @@ double Item::totalAmount()
 	}
 }
 
+//Michael K
 Vendor::Vendor()
 {
 	name = "";
 	price = 0;
 }
 
+//Michael K
 Vendor::Vendor(string name, double price)
 {
 	this->name = name;
 	this->price = price;
 }
 
+//Michael K
 Item::Item() : Vendor()
 {
 	itemCategory = 0;
 	amount = 0;
 }
 
+//Michael K
 Item::Item(int itemCatagory, string name, double price) : Vendor(name, price)
 {
 	this->itemCategory = itemCatagory;
 	amount = 0;
 }
 
+//Michael K
 Item::Item(int itemCatagory, int amount, string name, double price) : Vendor(name, price)
 {
 	this->itemCategory = itemCatagory;
 	this->amount = amount;
 }
 
+//Michael K
 Service::Service()
 {
 	category = 0;
 	phoneNumber = 1111111111;
 }
 
+//Michael K
 Service::Service(string name, double price) : Vendor(name, price)
 {
 	category = 0;
 	phoneNumber = 1111111111;
 }
 
+//Michael K
 Service::Service(string name, double price, double phoneNumber) : Vendor(name, price)
 {
 	category = 0;
 	this->phoneNumber = phoneNumber;
 }
 
+//Michael K
 double Service::totalAmount()
 {
 	double taxAmount = price * CATEGORY_TAX[category];
 	return price + taxAmount;
 }
 
+//Michael K
 string Service::fileFormat()
 {
 	return string();
 }
 
+//Michael K
 void Service::getDescription()
 {
 	cout << "Service Name: " << name << " | ";
 	cout << "Price: $" << price << " | ";
 }
 
+//Michael K
 int Service::getCategory()
 {
 	return category;
