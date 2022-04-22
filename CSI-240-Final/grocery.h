@@ -14,7 +14,7 @@ const string ADMIN_USER = "admin";
 const string CUSTOMER_USER = "customer";
 const enum category
 {
-	Service = 0,
+	SERVICE = 0,
 	MEAT,
 	VEGETABLE,
 	FRUIT,
@@ -23,7 +23,7 @@ const enum category
 	DRINK
 };
 const string CATEGORY_NAMES[] = { "Service", "Meat", "Vegetable", "Fruit", "Baked Good", "Snack", "Drink" };
-const double CATEGORY_TAXS[] = {.5, 0.2, 0.05, 0.15, 0.5, 0.5, 0.3};
+const double CATEGORY_TAX[] = {.5, 0.2, 0.05, 0.15, 0.5, 0.5, 0.3};
 
 //Global Functions
 char login();
@@ -40,6 +40,7 @@ private:
 	string message;
 };
 
+
 class Vendor
 {
 public:
@@ -52,10 +53,12 @@ public:
 	virtual int totalAmount() = 0;
 	virtual string fileFormat() = 0;
 	virtual void getDescription() = 0;
+	virtual int getCategory() = 0;
 protected:
 	string name;
 	double price;
 };
+
 
 class Item : public Vendor
 {
@@ -67,6 +70,7 @@ public:
 	void getDescription() override;
 	int totalAmount() override;
 	string fileFormat() override;
+	int getCategory() override;
 
 	int getItemCategory();
 	int getAmount();
@@ -78,18 +82,23 @@ private:
 	int amount;
 };
 
-//class Service : public Vendor
-//{
-//public:
-//	Service();
-//	Service(string phoneNumber);
-//
-//	int totalAmount() override;
-//	string fileFormat() override;
-//
-//private:
-//	string phoneNumber;
-//};
+
+class Service : public Vendor
+{
+public:
+	Service();
+	Service(string name, double price);
+	Service(string name, double price, double phoneNumber);
+
+	int totalAmount() override;
+	string fileFormat() override;
+	void getDescription() override;
+	int getCategory() override;
+
+private:
+	double phoneNumber;
+	int category;
+};
 
 class Inventory
 {

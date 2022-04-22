@@ -290,7 +290,7 @@ Cart::~Cart()
 //Michael K
 void Cart::addToCart()
 {
-	vector<Item*> aisleItems;
+	vector<Vendor*> aisleItems;
 	int chosenItem;
 	int option;
 	ifstream inventoryFile;
@@ -321,7 +321,14 @@ void Cart::addToCart()
 			inventoryFile >> name;
 			inventoryFile >> price;
 
-			aisleItems.push_back(new Item(categoryNum, name, price));
+			if (categoryNum == SERVICE) 
+			{
+				aisleItems.push_back(new Service(name, price));
+			}
+			else 
+			{
+				aisleItems.push_back(new Item(categoryNum, name, price));
+			}
 		}
 		else
 		{
@@ -331,10 +338,11 @@ void Cart::addToCart()
 
 	int continueOption = 1;
 	int amount;
+	double phoneNumber;
 	do
 	{
 		int index = 0;
-		for (Item* i : aisleItems) 
+		for (Vendor* i : aisleItems) 
 		{
 			cout << "[" << index << "]";
 			i->getDescription();
@@ -347,11 +355,21 @@ void Cart::addToCart()
 
 		if (chosenItem > aisleItems.size() - 1) { cout << "Please Enter a Valid Item" << endl; cout << endl; continue; }
 
-		cout << "How many would you like?: ";
-		cin >> amount;
+		if (option == SERVICE)
+		{
+			cout << "Please enter your Phone Number so we can contact you with further instructions: ";
+			cin >> phoneNumber;
 
-		Item* itemToAdd = new Item(aisleItems[chosenItem]->getItemCategory(), amount, aisleItems[chosenItem]->getName(), aisleItems[chosenItem]->getPrice());
-		cart.push_back(itemToAdd);
+			Service* serviceToAdd = new Service(aisleItems[chosenItem]->getName(), aisleItems[chosenItem]->getPrice(), phoneNumber);
+		}
+		else
+		{
+			cout << "How many would you like?: ";
+			cin >> amount;
+
+			Item* itemToAdd = new Item(aisleItems[chosenItem]->getCategory(), amount, aisleItems[chosenItem]->getName(), aisleItems[chosenItem]->getPrice());
+			cart.push_back(itemToAdd);
+		}
 
 		cout << "Add Another? [0 for No] [1 for Yes]: ";
 		cin >> continueOption;
@@ -386,6 +404,11 @@ void Cart::calculateTotalPrice()
 string Item::fileFormat()
 {
 	return to_string(itemCategory) + " " + name + " " + to_string(price);
+}
+
+int Item::getCategory()
+{
+	return itemCategory;
 }
 
 int Item::getItemCategory()
@@ -432,9 +455,20 @@ void Item::getDescription()
 //	return afterTax;
 //}
 
+
+//Michael K
 int Item::totalAmount()
 {
-	return 0;
+	if (amount > 0) 
+	{
+		double taxPrice = (price * amount) * CATEGORY_TAX[itemCategory];
+		return (price*amount) + taxPrice;
+	}
+	else 
+	{
+		throw Exceptions("You don't have any " + name + " in your cart");
+		return 0;
+	}
 }
 
 Vendor::Vendor()
@@ -465,4 +499,44 @@ Item::Item(int itemCatagory, int amount, string name, double price) : Vendor(nam
 {
 	this->itemCategory = itemCatagory;
 	this->amount = amount;
+}
+
+Service::Service()
+{
+	category = 0;
+	phoneNumber = 1111111111;
+}
+
+Service::Service(string name, double price) : Vendor(name, price)
+{
+	category = 0;
+	phoneNumber = 1111111111;
+}
+
+Service::Service(string name, double price, double phoneNumber) : Vendor(name, price)
+{
+	category = 0;
+	this->phoneNumber = phoneNumber;
+}
+
+int Service::totalAmount()
+{
+	double taxAmount = price * CATEGORY_TAX[category];
+	return price + taxAmount;
+}
+
+string Service::fileFormat()
+{
+	return string();
+}
+
+void Service::getDescription()
+{
+	cout << "Service Name: " << name << " | ";
+	cout << "Price: $" << price << " | ";
+}
+
+int Service::getCategory()
+{
+	return category;
 }
