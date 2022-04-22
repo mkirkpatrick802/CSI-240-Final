@@ -448,16 +448,21 @@ void Item::getDescription()
 	}
 }
 
-//double Item::operator*(const Item& left)
-//{
-//	double subtotal = left.price * left.amount;
-//	double afterTax = subtotal * CATEGORY_TAXS[left.itemCategory];
-//	return afterTax;
-//}
+double operator+(const double& left, Vendor& right)
+{
+
+	return left + right.totalAmount();
+}
+
+double operator*(const double& left, Vendor& right)
+{
+	
+	return left * right.totalAmount();
+}
 
 
 //Michael K
-int Item::totalAmount()
+double Item::totalAmount()
 {
 	if (amount > 0) 
 	{
@@ -519,7 +524,7 @@ Service::Service(string name, double price, double phoneNumber) : Vendor(name, p
 	this->phoneNumber = phoneNumber;
 }
 
-int Service::totalAmount()
+double Service::totalAmount()
 {
 	double taxAmount = price * CATEGORY_TAX[category];
 	return price + taxAmount;

@@ -24,12 +24,18 @@ const enum category
 };
 const string CATEGORY_NAMES[] = { "Service", "Meat", "Vegetable", "Fruit", "Baked Good", "Snack", "Drink" };
 const double CATEGORY_TAX[] = {.5, 0.2, 0.05, 0.15, 0.5, 0.5, 0.3};
+const double SALES_TAX = 0.05;
 
 //Global Functions
 char login();
 void startMenu();
 void adminMenu();
 void customerMenu();
+
+class Vendor;
+
+double operator+(const double& left, Vendor& right);
+double operator*(const double& left, Vendor& right);
 
 class Exceptions
 {
@@ -50,10 +56,14 @@ public:
 	string getName();
 	double getPrice();
 
-	virtual int totalAmount() = 0;
+	virtual double totalAmount() = 0;
 	virtual string fileFormat() = 0;
 	virtual void getDescription() = 0;
 	virtual int getCategory() = 0;
+
+	friend double operator*(const double& left, Vendor& right);
+	friend double operator+(const double& left, Vendor& right);
+
 protected:
 	string name;
 	double price;
@@ -68,14 +78,14 @@ public:
 	Item(int itemCatagory, int amount, string name, double price);
 
 	void getDescription() override;
-	int totalAmount() override;
+	double totalAmount() override;
 	string fileFormat() override;
 	int getCategory() override;
 
 	int getItemCategory();
 	int getAmount();
 
-	//double operator*(const Item& left);
+	
 
 private:
 	int itemCategory;
@@ -90,7 +100,7 @@ public:
 	Service(string name, double price);
 	Service(string name, double price, double phoneNumber);
 
-	int totalAmount() override;
+	double totalAmount() override;
 	string fileFormat() override;
 	void getDescription() override;
 	int getCategory() override;
