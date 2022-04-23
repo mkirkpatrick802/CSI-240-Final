@@ -367,11 +367,11 @@ void Cart::addToCart()
 	vector<Vendor*> aisleItems;
 	int chosenItem;
 	ifstream inventoryFile;
-	inventoryFile.open(INVENTORY_FILE);
-	if (!inventoryFile.is_open()) { throw Exceptions("Can't Open " + INVENTORY_FILE); }
 	int again = 0;
 	do
 	{
+		inventoryFile.open(INVENTORY_FILE);
+		if (!inventoryFile.is_open()) { throw Exceptions("Can't Open " + INVENTORY_FILE); }
 		int option = -1;
 		int index = 0;
 		for (string i : CATEGORY_NAMES)
@@ -438,6 +438,7 @@ void Cart::addToCart()
 			cin >> phoneNumber;
 
 			Service* serviceToAdd = new Service(aisleItems[chosenItem]->getName(), aisleItems[chosenItem]->getPrice(), phoneNumber);
+			cart.push_back(serviceToAdd);
 		}
 		else
 		{
@@ -459,6 +460,7 @@ void Cart::addToCart()
 			delete i;
 		}
 		aisleItems.clear();
+		inventoryFile.close();
 	} while (again == 1);
 }
 
@@ -476,7 +478,7 @@ void Cart::removeFromCart()
 		displayCart();
 		string name;
 
-		cout << "What would you like to remove?" << endl;
+		cout << "What would you like to remove?: ";
 		cin >> name;
 
 		for (int i = 0; i < cart.size(); i++)
@@ -501,7 +503,6 @@ void Cart::removeFromCart()
 */
 void Cart::displayCart()
 {
-	cout << cart.size();
 	for (Vendor* i : cart) 
 	{
 		i->getDescription();
@@ -604,12 +605,12 @@ double Vendor::getPrice()
 void Item::getDescription()
 {
 
-	cout << "Item Type: " << CATEGORY_NAMES[itemCategory] << " | ";
-	cout << "Item Name: " << name << " | ";
-	cout << "Price: $" << price << " | ";
+	cout << left << "Item Type: " << setw(FIELD_WIDTH) << right << CATEGORY_NAMES[itemCategory] << " | ";
+	cout << left << "Item Name: " << setw(FIELD_WIDTH) << right << name << " | ";
+	cout << left << "Price: $" << setw(FIELD_WIDTH) << right << fixed << setprecision(2) << price << " | ";
 	if (amount > 0) 
 	{
-		cout << "Amount: " << amount << " | " << endl;
+		cout << left << "Amount: " << setw(FIELD_WIDTH) << right << amount << " | " << endl;
 	}
 	else
 	{
@@ -788,8 +789,8 @@ string Service::fileFormat()
 */
 void Service::getDescription()
 {
-	cout << "Service Name: " << name << " | ";
-	cout << "Price: $" << price << " | ";
+	cout << left << "Service Name: " << setw(FIELD_WIDTH) << right << name << " | ";
+	cout << left << "Price: $" << setw(FIELD_WIDTH) << right << fixed << setprecision(2) << price << " | ";
 }
 
 //Michael K
