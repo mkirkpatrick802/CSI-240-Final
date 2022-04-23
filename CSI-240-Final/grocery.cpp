@@ -1,6 +1,11 @@
 #include "grocery.h"
 
 //Mikey M
+/*
+	Input: A message string
+	Output: An exception object
+	Purpose: Print out an error message if an error ocurrs
+*/
 Exceptions::Exceptions(string message)
 {
 	this->message = message;
@@ -11,6 +16,11 @@ string Exceptions::getMessage()
 }
 
 //Michael K
+/*
+	Input: a char given by the login function
+	Output: none
+	Purpose: Bring the user to the appropriate menu based on their login credentials
+*/
 void startMenu() 
 {
 	switch (login())
@@ -28,6 +38,11 @@ void startMenu()
 }
 
 //Mikey M
+/*
+	Input: login.dat file, strings inputted by the user
+	Output: a char bit for use by the startMenu function
+	Purpose: takes the strings inputted by the user, compares them to the login.dat file, and returns a char depending on the inputs
+*/
 char login() 
 {
 	string username;
@@ -72,6 +87,11 @@ char login()
 }
 
 //Michael K
+/*
+	Input: char from startMenu 
+	Output: the menu for shop employees
+	Purpose: Allows employees to access the appropriate functions 
+*/
 void adminMenu() 
 {
 	Inventory inventory;
@@ -110,6 +130,11 @@ void adminMenu()
 
 }
 // Mikey M
+/*
+	Input: char from startMenu
+	Output: the menu for shop customers
+	Purpose: Allows customers to access the appropriate functions 
+*/
 void customerMenu() 
 {
 	Cart cart;
@@ -149,12 +174,22 @@ void customerMenu()
 }
 
 //Michael K
+/*
+	Input: Inventory linked list
+	Output: Inventory linked list
+	Purpose: resizes the inventory linked list upon creation of an inventory item
+*/
 Inventory::Inventory()
 {
 	inventoryList.resize(0);
 }
 
 //Michael K
+/*
+	Input: Inventory linked list
+	Output: Inventory linked list
+	Purpose: resizes the inventory linked list upon destruction of an inventory item
+*/
 Inventory::~Inventory()
 {
 	for (Vendor* i : inventoryList)
@@ -165,6 +200,11 @@ Inventory::~Inventory()
 }
 
 //Michael K
+/*
+	Input: inventory linked list
+	Output: inventory linked list
+	Purpose: adds an item to the inventory linked list
+*/
 void Inventory::addToInventory()
 {
 	int option = 1;
@@ -199,6 +239,11 @@ void Inventory::addToInventory()
 }
 
 //Michael K
+/*
+	Input: inventory linked list
+	Output: inventory linked list
+	Purpose: removes an item from the inventory linked list
+*/
 void Inventory::deleteItemFromInventory()
 {
 	int option = 1;
@@ -226,6 +271,11 @@ void Inventory::deleteItemFromInventory()
 }
 
 //Michael K
+/*
+	Input: inventory linked list
+	Output: inventory linked list
+	Purpose: prints the items of the inventory linked list to the screen
+*/
 void Inventory::displayInventory()
 {
 	for (Vendor* i : inventoryList)
@@ -235,6 +285,11 @@ void Inventory::displayInventory()
 }
 
 //Michael K
+/*
+	Input: inventory.dat
+	Output: inventory linked list
+	Purpose: creates a linked list from the items in inventory.dat
+*/
 void Inventory::importInventory()
 {
 	ifstream inventoryFile;
@@ -259,6 +314,11 @@ void Inventory::importInventory()
 }
 
 //Michael K
+/*
+	Input: inventory linked list
+	Output: inventory.dat
+	Purpose: saves the items from the linked list into the inventory.dat file
+*/
 void Inventory::exportInventory()
 {
 	ofstream inventoryFile;
@@ -272,11 +332,21 @@ void Inventory::exportInventory()
 	}
 }
 // Mikey M
+/*
+	Input: Cart linked list
+	Output: Cart linked list
+	Purpose: resizes the cart linked list upon addition of an item to the cart
+*/
 Cart::Cart()
 {
 	cart.resize(0);
 }
 // Mikey M
+/*
+	Input: Cart linked list
+	Output: Cart linked list
+	Purpose: resizes the cart linked list upon removal of an item from the cart
+*/
 Cart::~Cart()
 {
 	for (Vendor* i : cart)
@@ -287,6 +357,11 @@ Cart::~Cart()
 }
 
 //Michael K
+/*
+	Input: cart linked list
+	Output: cart linked list
+	Purpose: adds an item to the cart linked list
+*/
 void Cart::addToCart()
 {
 	vector<Vendor*> aisleItems;
@@ -388,6 +463,11 @@ void Cart::addToCart()
 }
 
 // Mikey M
+/*
+	Input: cart linked list
+	Output: cart linked list
+	Purpose: removes an item from the cart linked list
+*/
 void Cart::removeFromCart()
 {
 	int option = 1;
@@ -414,6 +494,11 @@ void Cart::removeFromCart()
 
 
 //Michael K
+/*
+	Input: cart linked list
+	Output: cart linked list
+	Purpose: prints the items of the cart linked list to the screen
+*/
 void Cart::displayCart()
 {
 	cout << cart.size();
@@ -424,6 +509,11 @@ void Cart::displayCart()
 }
 
 //Michael K
+/*
+	Input: cart linked list, float price & int amount
+	Output: double totalPrice
+	Purpose: takes the items from the cart linked list, calculates the price owed by the customers to pay the shop
+*/
 void Cart::calculateTotalPrice()
 {
 	double totalPrice = 0;
@@ -440,42 +530,77 @@ void Cart::calculateTotalPrice()
 }
 
 //Michael K
+/*
+	Input: enum category
+	Output: category string
+	Purpose: takes the category enum and converts it to the appropriate aisle string
+*/
 string Item::fileFormat()
 {
 	return to_string(itemCategory) + " " + name + " " + to_string(price);
 }
 
 //Michael K
+/*
+	Input: Item object
+	Output: category string
+	Purpose: gets the category string from the inputted item
+*/
 int Item::getCategory()
 {
 	return itemCategory;
 }
 
 //Michael K
+/*
+	Input: Item object
+	Output: category string
+	Purpose: gets the category string from the inputted item
+*/
 int Item::getItemCategory()
 {
 	return itemCategory;
 }
 
 //Michael K
+/*
+	Input: Item object
+	Output: amount integer
+	Purpose: gets the amount integer from the inputted item
+*/
 int Item::getAmount()
 {
 	return amount;
 }
 
 //Michael K
+/*
+	Input: Vendor object
+	Output: name string
+	Purpose: gets the name string from the inputted vendor
+*/
 string Vendor::getName()
 {
 	return name;
 }
 
 //Michael K
+/*
+	Input: Vendor object
+	Output: float price
+	Purpose: gets the float price from the inputted vendor
+*/
 double Vendor::getPrice()
 {
 	return price;
 }
 
 //Michael K
+/*
+	Input: Item object
+	Output: the details of the item
+	Purpose: prints the category, name, and price of each item to the screen
+*/
 void Item::getDescription()
 {
 
@@ -493,6 +618,11 @@ void Item::getDescription()
 }
 
 //Mikey M
+/*
+	Input: two prices
+	Output: the total amount
+	Purpose: calculates the total amount owed by the customer for the items paid
+*/
 double operator+(const double& left, Vendor& right)
 {
 
@@ -500,6 +630,11 @@ double operator+(const double& left, Vendor& right)
 }
 
 //Mikey M
+/*
+	Input: the item price, and the amount of items purchased
+	Output: the total amount
+	Purpose: calculates the total amount owed by the customer for the items paid
+*/
 double operator*(const double& left, Vendor& right)
 {
 	
@@ -507,6 +642,11 @@ double operator*(const double& left, Vendor& right)
 }
 
 //Michael K
+/*
+	Input: the tax price
+	Output: the total amount
+	Purpose: adds the tax amount to the amount owed by the customer
+*/
 double Item::totalAmount()
 {
 	if (amount > 0) 
@@ -522,6 +662,11 @@ double Item::totalAmount()
 }
 
 //Michael K
+/*
+	Input: none
+	Output: Vendor item
+	Purpose: Vendor constructor
+*/
 Vendor::Vendor()
 {
 	name = "";
@@ -529,6 +674,11 @@ Vendor::Vendor()
 }
 
 //Michael K
+/*
+	Input: Empty vendor
+	Output: Vendor items with details
+	Purpose: adds the details inputted by the admin to the empty vendor item
+*/
 Vendor::Vendor(string name, double price)
 {
 	this->name = name;
@@ -536,6 +686,11 @@ Vendor::Vendor(string name, double price)
 }
 
 //Michael K
+/*
+	Input: Vendor object
+	Output: Item object
+	Purpose: Adds the item-specific details to a vendor object
+*/
 Item::Item() : Vendor()
 {
 	itemCategory = 0;
@@ -543,6 +698,11 @@ Item::Item() : Vendor()
 }
 
 //Michael K
+/*
+	Input: Empty item
+	Output: Item with category
+	Purpose: allocates the item object to the correct aisle
+*/
 Item::Item(int itemCatagory, string name, double price) : Vendor(name, price)
 {
 	this->itemCategory = itemCatagory;
@@ -550,6 +710,11 @@ Item::Item(int itemCatagory, string name, double price) : Vendor(name, price)
 }
 
 //Michael K
+/*
+	Input: Empty item
+	Output: Item object
+	Purpose: Gives the item specific details the correct details inputted by the admin
+*/
 Item::Item(int itemCatagory, int amount, string name, double price) : Vendor(name, price)
 {
 	this->itemCategory = itemCatagory;
@@ -557,6 +722,11 @@ Item::Item(int itemCatagory, int amount, string name, double price) : Vendor(nam
 }
 
 //Michael K
+/*
+	Input: none
+	Output: Service object
+	Purpose: Service constructor
+*/
 Service::Service()
 {
 	category = 0;
@@ -564,6 +734,11 @@ Service::Service()
 }
 
 //Michael K
+/*
+	Input: Service object
+	Output: Service object with Vendor variables
+	Purpose: gives vendor variables to a service object
+*/
 Service::Service(string name, double price) : Vendor(name, price)
 {
 	category = 0;
@@ -571,6 +746,11 @@ Service::Service(string name, double price) : Vendor(name, price)
 }
 
 //Michael K
+/*
+	Input: Service object
+	Output: Updated service object
+	Purpose: adds an inputted phone number to a service object
+*/
 Service::Service(string name, double price, double phoneNumber) : Vendor(name, price)
 {
 	category = 0;
@@ -578,6 +758,11 @@ Service::Service(string name, double price, double phoneNumber) : Vendor(name, p
 }
 
 //Michael K
+/*
+	Input: Service object
+	Output: price for service
+	Purpose: calculates the price with tax for the service
+*/
 double Service::totalAmount()
 {
 	double taxAmount = price * CATEGORY_TAX[category];
@@ -585,12 +770,22 @@ double Service::totalAmount()
 }
 
 //Michael K
+/*
+	Input: Service object
+	Output: string name in inventory.dat
+	Purpose: Gives a name to the service object
+*/
 string Service::fileFormat()
 {
 	return string();
 }
 
 //Michael K
+/*
+	Input: service object
+	Output: description on screen
+	Purpose: prints the name and price of the service to the screen
+*/
 void Service::getDescription()
 {
 	cout << "Service Name: " << name << " | ";
@@ -598,6 +793,11 @@ void Service::getDescription()
 }
 
 //Michael K
+/*
+	Input: Service object
+	Output: category integer
+	Purpose: Gets the category integer by the Service class
+*/
 int Service::getCategory()
 {
 	return category;
