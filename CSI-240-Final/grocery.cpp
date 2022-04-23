@@ -292,11 +292,11 @@ void Cart::addToCart()
 	vector<Vendor*> aisleItems;
 	int chosenItem;
 	ifstream inventoryFile;
-	inventoryFile.open(INVENTORY_FILE);
-	if (!inventoryFile.is_open()) { throw Exceptions("Can't Open " + INVENTORY_FILE); }
 	int again = 0;
 	do
 	{
+		inventoryFile.open(INVENTORY_FILE);
+		if (!inventoryFile.is_open()) { throw Exceptions("Can't Open " + INVENTORY_FILE); }
 		int option = -1;
 		int index = 0;
 		for (string i : CATEGORY_NAMES)
@@ -384,6 +384,7 @@ void Cart::addToCart()
 			delete i;
 		}
 		aisleItems.clear();
+		inventoryFile.close();
 	} while (again == 1);
 }
 
@@ -396,7 +397,7 @@ void Cart::removeFromCart()
 		displayCart();
 		string name;
 
-		cout << "What would you like to remove?" << endl;
+		cout << "What would you like to remove?: ";
 		cin >> name;
 
 		for (int i = 0; i < cart.size(); i++)
@@ -416,7 +417,6 @@ void Cart::removeFromCart()
 //Michael K
 void Cart::displayCart()
 {
-	cout << cart.size();
 	for (Vendor* i : cart) 
 	{
 		i->getDescription();
