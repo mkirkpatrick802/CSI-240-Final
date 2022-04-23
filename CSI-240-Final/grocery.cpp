@@ -363,6 +363,7 @@ void Cart::addToCart()
 			cin >> phoneNumber;
 
 			Service* serviceToAdd = new Service(aisleItems[chosenItem]->getName(), aisleItems[chosenItem]->getPrice(), phoneNumber);
+			cart.push_back(serviceToAdd);
 		}
 		else
 		{
@@ -479,12 +480,12 @@ double Vendor::getPrice()
 void Item::getDescription()
 {
 
-	cout << "Item Type: " << CATEGORY_NAMES[itemCategory] << " | ";
-	cout << "Item Name: " << name << " | ";
-	cout << "Price: $" << price << " | ";
+	cout << left << "Item Type: " << setw(FIELD_WIDTH) << right << CATEGORY_NAMES[itemCategory] << " | ";
+	cout << left << "Item Name: " << setw(FIELD_WIDTH) << right << name << " | ";
+	cout << left << "Price: $" << setw(FIELD_WIDTH) << right << fixed << setprecision(2) << price << " | ";
 	if (amount > 0) 
 	{
-		cout << "Amount: " << amount << " | " << endl;
+		cout << left << "Amount: " << setw(FIELD_WIDTH) << right << amount << " | " << endl;
 	}
 	else
 	{
@@ -593,8 +594,8 @@ string Service::fileFormat()
 //Michael K
 void Service::getDescription()
 {
-	cout << "Service Name: " << name << " | ";
-	cout << "Price: $" << price << " | ";
+	cout << left << "Service Name: " << setw(FIELD_WIDTH) << right << name << " | ";
+	cout << left << "Price: $" << setw(FIELD_WIDTH) << right << fixed << setprecision(2) << price << " | ";
 }
 
 //Michael K
